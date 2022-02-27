@@ -1,31 +1,30 @@
 <template>
   <div class="register-container">
+    <el-form :model="registerForm" :rules="registerRules" ref="registerForm" label-width="100px" class="register-form">
+      <div class="title-container">
+        <h3 class="title">University Bazzar System Registration</h3>
+      </div>
 
-  <el-form :model="registerForm" :rules="registerRules" ref="registerForm" label-width="100px" class="register-form">
-    <div class="title-container">
-      <h3 class="title">University Bazzar System Registration</h3>
-    </div>
+      <el-form-item label="UniversityID" prop="id">
+        <el-input v-model="registerForm.id"></el-input>
+      </el-form-item>
+      <el-form-item label="Username" prop="username">
+        <el-input v-model="registerForm.username"></el-input>
+      </el-form-item>
+      <el-form-item label="Password" prop="password">
+        <el-input v-model="registerForm.password"></el-input>
+      </el-form-item>
+      <el-form-item label="Telephone" prop="tel">
+        <el-input v-model="registerForm.tel"></el-input>
+      </el-form-item>
+      <el-form-item label="E-mail" prop="email">
+        <el-input v-model="registerForm.email"></el-input>
+      </el-form-item>
 
-    <el-form-item label="UniversityID" prop="id">
-      <el-input v-model="registerForm.id"></el-input>
-    </el-form-item>
-    <el-form-item label="Username" prop="username">
-      <el-input v-model="registerForm.username"></el-input>
-    </el-form-item>
-    <el-form-item label="Password" prop="password">
-      <el-input v-model="registerForm.password"></el-input>
-    </el-form-item>
-    <el-form-item label="Telephone" prop="tel">
-      <el-input v-model="registerForm.tel"></el-input>
-    </el-form-item>
-    <el-form-item label="E-mail" prop="email">
-      <el-input v-model="registerForm.email"></el-input>
-    </el-form-item>
+      <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="registerDone">Submit</el-button>
+      <el-button type="info" style="width:100%;margin-bottom:30px;" @click="clearForm">Cancel</el-button>
 
-    <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="registerDone">Submit</el-button>
-    <el-button type="info" style="width:100%;margin-bottom:30px;" @click="clearForm">Cancel</el-button>
-
-  </el-form>
+    </el-form>
   </div>
 
 </template>
@@ -41,7 +40,7 @@ export default {
       }
     }
     const validateUsername = (rule, value, callback) => {
-      if (value.length < 5 || value.length > 12) {
+      if (value.length < 3 || value.length > 12) {
         callback(new Error('Username is expected 5 to 12 characters!'))
       } else {
         callback()
@@ -73,6 +72,9 @@ export default {
     registerDone () {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
+          this.$axios.post('bazzar/registration', this.registerForm).then(res => {
+            console.log(res)
+          })
           this.$router.push({ path: '/login' })
         }
       })
@@ -81,6 +83,9 @@ export default {
       this.$router.push({ path: 'login' })
       this.$refs.registerForm.resetFields()
       console.log('clear form!')
+    },
+    handleclick () {
+      console.log('handleclick')
     }
   }
 }

@@ -6,14 +6,20 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/icons'
+import axios from 'axios'
+import store from './store'
+
+require('./mock/mock.js')
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
