@@ -8,7 +8,12 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state () {
     return {
-      token: Cookies.get('token')
+      token: null
+    }
+  },
+  getters: {
+    getToken: (state) => {
+      return state.token ? state.token : Cookies.get('token')
     }
   },
   mutations: {

@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import Registration from '@/views/Registration'
 import Home from '@/views/Home'
-import Cookies from 'js-cookie'
+import store from '../store'
 
 Vue.use(Router)
 
@@ -34,11 +34,13 @@ export const router = new Router({
 
 // navigation guards
 router.beforeEach((to, from, next) => {
-  let token = Cookies.get('token')
+  let token = store.getters.getToken
+  console.log(token)
   if (token || to.path === '/login') {
     next()
   } else {
     next('/login')
+    console.log('aa')
   }
 })
 
