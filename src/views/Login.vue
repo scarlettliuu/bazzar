@@ -172,6 +172,10 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+
+  .el-button+.el-button {
+  margin-left: 0 !important;
+}
 }
 </style>
 

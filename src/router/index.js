@@ -4,11 +4,16 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import Registration from '@/views/Registration'
 import Home from '@/views/Home'
+import Cookies from 'js-cookie'
 
 Vue.use(Router)
 
-export default new Router({
+export const router = new Router({
   routes: [
+    {
+      path: '/',
+      redirect: '/login'
+    },
     {
       path: '/login',
       name: 'Login',
@@ -20,9 +25,21 @@ export default new Router({
       component: Registration
     },
     {
-      path: '/',
+      path: '/home',
       name: 'Home',
       component: Home
     }
   ]
 })
+
+// navigation guards
+router.beforeEach((to, from, next) => {
+  let token = Cookies.get('token')
+  if (token || to.path === '/login') {
+    next()
+  } else {
+    next('/login')
+  }
+})
+
+export default router
