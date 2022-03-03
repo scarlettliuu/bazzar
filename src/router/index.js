@@ -5,15 +5,16 @@ import Login from '@/views/Login'
 import Registration from '@/views/Registration'
 import Home from '@/views/Home'
 import store from '../store'
+import Layout from '@/layout'
 
 Vue.use(Router)
 
 export const router = new Router({
   routes: [
-    {
-      path: '/',
-      redirect: '/login'
-    },
+    // {
+    //   path: '/',
+    //   redirect: '/login'
+    // },
     {
       path: '/login',
       name: 'Login',
@@ -25,9 +26,14 @@ export const router = new Router({
       component: Registration
     },
     {
-      path: '/home',
-      name: 'Home',
-      component: Home
+      path: '/',
+      redirect: '/home',
+      component: Layout,
+      children: [{
+        path: 'home',
+        name: 'Home',
+        component: Home
+      }]
     }
   ]
 })
@@ -43,5 +49,10 @@ router.beforeEach((to, from, next) => {
     console.log('aa')
   }
 })
+
+export function resetRouter () {
+  const newRouter = router
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router
