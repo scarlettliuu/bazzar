@@ -109,11 +109,12 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log(this.$store)
           this.$store.dispatch('login', this.loginForm).then(() => {
+            console.log('login in Loginvue')
             this.$router.push({ path: '/home' })
             this.loading = false
-          }).catch(() => {
+          }).catch((err) => {
+            console.log(err)
             this.loading = false
           })
         } else {

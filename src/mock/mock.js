@@ -30,13 +30,17 @@ const existedUser = function (user) {
   return isExist
 }
 Mock.mock('bazzar/registration', existedUser)
-Mock.mock('http://localhost:8081/login', 'post', (req) => {
+Mock.mock('http://localhost:8081/api/ubs/user/login', 'post', (req) => {
   // if (option !== null) {
   // const { username, password } = JSON.parse(req.body)
   return {
     status: 200,
     message: 'Login Successfully!',
-    token: '12Q3we'
+    data: {
+      id: '0',
+      username: 'Lisa',
+      token: '12Q3we'
+    }
   }
   // } else {
   //   return Mock.mock({
@@ -48,3 +52,19 @@ Mock.mock('http://localhost:8081/login', 'post', (req) => {
 // Mock.mock('http://localhost:8080/login', 'post', function(option) {
 //   template
 // })
+Mock.mock('http://localhost:8081/api/ubs/user/logout', 'post', (req) => {
+  return {
+    status: 200,
+    message: 'Logout successfully!'
+  }
+})
+Mock.mock('http://localhost:8081/api/ubs/home/userinfo', 'get', (req) => {
+  return {
+    status: 200,
+    data: {
+      username: 'Lisa',
+      tel: '',
+      email: ''
+    }
+  }
+})
