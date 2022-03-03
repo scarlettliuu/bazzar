@@ -18,17 +18,26 @@ export const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        ignoreAuth: true
+      }
     },
     {
       path: '/registration',
       name: 'Registration',
-      component: Registration
+      component: Registration,
+      meta: {
+        ignoreAuth: true
+      }
     },
     {
       path: '/',
       redirect: '/home',
       component: Layout,
+      meta: {
+        ignoreAuth: false
+      },
       children: [{
         path: 'home',
         name: 'Home',
@@ -41,12 +50,11 @@ export const router = new Router({
 // navigation guards
 router.beforeEach((to, from, next) => {
   let token = store.getters.getToken
-  console.log(token)
-  if (token || to.path === '/login') {
+
+  if (token || to.meta.ignoreAuth) {
     next()
   } else {
     next('/login')
-    console.log('aa')
   }
 })
 
